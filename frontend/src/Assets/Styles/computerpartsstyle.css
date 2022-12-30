@@ -1,0 +1,140 @@
+.cp-navlink {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+.cp-navlink-container {
+  position: relative;
+  height: 100%;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.cp-navlink-container a {
+  text-decoration: none;
+  color: rgb(0, 0, 0, 0.5);
+  font-size: 16px;
+}
+
+.cp-content {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+.cp-categories-container {
+  position: relative;
+  margin-top: 25px;
+  height: 80%;
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.cp-categories-container p {
+  margin-top: 15px;
+  color: rgb(0, 0, 0, 0.5);
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.cp-categories-container p:hover {
+  font-weight: bold;
+}
+.cp-items-container {
+  position: relative;
+  height: 100%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-self: center;
+}
+
+.cp-filter {
+  position: relative;
+  height: 40px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 1;
+}
+
+.cp-filter p {
+  color: #ff7a00;
+  font-size: 12px;
+  font-weight: 500;
+}
+.cp-filter .dropdown-div,
+.cp-filter input {
+  margin-left: 10px;
+}
+.dropdown-div button,
+.cp-search-btn {
+  height: 25px;
+  width: 75px;
+  font-size: 14px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  color: rgb(0, 0, 0, 0.5);
+}
+.hidden-div {
+  position: absolute;
+  max-height: 500px;
+  min-width: 75px;
+  max-width: 400px;
+  overflow-y: scroll;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.option-div {
+  position: relative;
+  min-width: 75px;
+  max-width: 400px;
+  border: 1px solid rgb(128, 128, 128, 0.5);
+  cursor: pointer;
+}
+.option-div p {
+  text-align: center;
+  color: rgb(0, 0, 0, 0.5);
+}
+
+.cp-item-container {
+  position: relative;
+  height: 85%;
+  width: 100%;
+  top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.computer-parts-items-container {
+  position: relative;
+  height: 90%;
+  width: 90%;
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  overflow-y: scroll;
+}
