@@ -1,13 +1,21 @@
 //dependencies
-import React, { useState, lazy, Suspense } from "react";
+import React, { useState, lazy, Suspense, useEffect } from "react";
 
 //components
 import { Topnav } from "../Components/Topnav";
 import { LoadingComponent } from "../Components/Loading";
+
 //assets
 import "../Assets/Styles/computerpartsstyle.css";
 
+//data
+import { brands } from "../JSON/data";
+
 export const ComputerParts = () => {
+  useEffect(() => {
+    document.title = "Computer Parts";
+  });
+
   const ComputerPartsItems = lazy(() =>
     wait(5000).then(() =>
       import("../Components/ComputerPartsItems").then((module) => {
@@ -20,25 +28,6 @@ export const ComputerParts = () => {
   const [brandDisplay, setBrandDisplay] = useState("none");
   const [priceText, setPriceText] = useState("Lowest");
   const [brandText, setBrandText] = useState("");
-  //simulated brands
-  const brands = [
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "o",
-    "p",
-  ];
 
   const priceDisplayHook = () => {
     if (priceDisplay === "none") {
@@ -69,7 +58,7 @@ export const ComputerParts = () => {
         <div className="cp-navlink-container">
           <a href="/computer-parts">Computer Parts</a>
           <a href="/ready-to-wear">Ready To Wear</a>
-          <a href="/handtools">Hand Tools</a>
+          <a href="/hand-tools">Hand Tools</a>
           <a href="/gadgets">Gadgets</a>
           <a href="/appliances">Appliances</a>
         </div>

@@ -1,5 +1,5 @@
 //dependencies
-import React from "react";
+import React, { useEffect } from "react";
 
 //components
 import { Topnav } from "../Components/Topnav";
@@ -19,6 +19,10 @@ import sportswear_image from "../Assets/Images/sportswear-image.png";
 import others_image from "../Assets/Images/others-image.png";
 
 export const ReadyToWear = () => {
+  useEffect(() => {
+    document.title = "Ready To Wear";
+  });
+
   const openRTWItemPage = () => {
     window.location.href = "/ready-to-wear/category-search";
   };

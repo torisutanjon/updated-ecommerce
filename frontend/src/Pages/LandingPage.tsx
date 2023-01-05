@@ -1,5 +1,5 @@
 //dependencies
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 
 //components
 import { Topnav } from "../Components/Topnav";
@@ -36,7 +36,9 @@ export const LandingPage = () => {
       })
     )
   );
-
+  useEffect(() => {
+    document.title = "E-Commerce";
+  });
   return (
     <div className="page-body">
       <Topnav />

@@ -1,9 +1,10 @@
 //dependencies
-import React, { useState } from "react";
+import React, { useState, useEffect, useTransition } from "react";
 
 //components
 import { Topnav } from "../Components/Topnav";
 import { ItemModal } from "../Components/ItemModal";
+import { LoadingComponent } from "../Components/Loading";
 
 //hooks
 import { gadgetsHiddenDivHook } from "../Hooks/Hook";
@@ -23,14 +24,13 @@ interface CategoryData {
 
 export const Gadgets = () => {
   //states
-  const [categoryData, setCategoruID] = useState<CategoryData | undefined>();
-
-  let arrivalIndex = 5;
-
+  const [isPending, startTransition] = useTransition();
+  const [categoryData, setCategoryID] = useState<CategoryData | undefined>();
+  const [newArrivals, setNewArrivals] = useState([{}]);
+  const [bestSellers, setBestSellers] = useState([{}]);
   //internal hooks
   const mouseIn = (id: string) => {
-    const returnedData = gadgetsHiddenDivHook(id);
-    setCategoruID(returnedData);
+    setCategoryID(gadgetsHiddenDivHook(id));
 
     const element = document.getElementById("gadgets-category-hidden-div");
     const elementTitle = document.getElementById("gadgets-category-title");
@@ -57,19 +57,21 @@ export const Gadgets = () => {
     }
   };
 
-  const newArrivals = (condition: string) => {
-    //get arrival data
-    if (condition === "prev") {
-      if (arrivalIndex > 5) {
-        arrivalIndex -= 5;
-        console.log(getNewArrivals(arrivalIndex));
-      }
-    } else {
-      arrivalIndex += 5;
-      console.log(getNewArrivals(arrivalIndex));
-    }
-    console.log(`arrivalIndex: ${arrivalIndex}`);
+  const getNewArrivalsHandler = (command: string) => {
+    setNewArrivals(getNewArrivals(command));
   };
+  const getBestSellersHandler = (command: string) => {
+    setBestSellers(getBestSellers(command));
+  };
+
+  //to populate nwe arrival on page load with first 5 objects in the "database"
+  useEffect(() => {
+    document.title = "Gadgets";
+    startTransition(() => {
+      setNewArrivals(getNewArrivals("firstrun"));
+      setBestSellers(getBestSellers("firstrun"));
+    });
+  }, []);
 
   return (
     <div className="page-body">
@@ -79,7 +81,7 @@ export const Gadgets = () => {
           <div className="gadgets-nav-container">
             <a href="/computer-parts">Computer Parts</a>
             <a href="/ready-to-wear">Ready To Wear</a>
-            <a href="/handtools">Hand Tools</a>
+            <a href="/hand-tools">Hand Tools</a>
             <a href="/gadgets">Gadgets</a>
             <a href="/appliances">Appliances</a>
           </div>
@@ -141,22 +143,46 @@ export const Gadgets = () => {
             <div className="gadget-products-title">
               <p>New Arrivals</p>
             </div>
-            <div className="gadget-products-gallery"></div>
+            <div className="gadget-products-gallery">
+              {isPending ? (
+                <LoadingComponent />
+              ) : (
+                newArrivals.map((data, key) => {
+                  return <ItemModal key={key} />;
+                })
+              )}
+            </div>
             <div className="gadget-products-navigator">
-              <button onClick={() => newArrivals("prev")}>{"<"}</button>
+              <button onClick={() => getNewArrivalsHandler("prev")}>
+                {"<"}
+              </button>
               &nbsp; &nbsp; &nbsp; &nbsp;
-              <button onClick={() => newArrivals("next")}>{">"}</button>
+              <button onClick={() => getNewArrivalsHandler("next")}>
+                {">"}
+              </button>
             </div>
           </div>
           <div className="gadget-products-container">
             <div className="gadget-products-title">
               <p>Best Sellers</p>
             </div>
-            <div className="gadget-products-gallery"></div>
+            <div className="gadget-products-gallery">
+              {isPending ? (
+                <LoadingComponent />
+              ) : (
+                bestSellers.map((data, key) => {
+                  return <ItemModal key={key} />;
+                })
+              )}
+            </div>
             <div className="gadget-products-navigator">
-              <button>{"<"}</button>
+              <button onClick={() => getBestSellersHandler("prev")}>
+                {"<"}
+              </button>
               &nbsp; &nbsp; &nbsp; &nbsp;
-              <button>{">"}</button>
+              <button onClick={() => getBestSellersHandler("next")}>
+                {">"}
+              </button>
             </div>
           </div>
         </div>

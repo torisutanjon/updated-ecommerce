@@ -1,0 +1,138 @@
+.sign-in-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+.welcome-div {
+  position: relative;
+  height: 10vh;
+  width: 70%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  top: 10vh;
+}
+.welcome-div p {
+  font-size: 48px;
+  color: black;
+  font-weight: normal;
+  padding: 0;
+  margin: 0;
+}
+
+.ecommerce-div {
+  position: relative;
+  height: 20vh;
+  width: 70%;
+  top: 10vh;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.ecommerce-div p {
+  font-size: 128px;
+  color: #ff7a00;
+  font-weight: 500;
+}
+
+.form-div {
+  position: relative;
+  height: 55vh;
+  width: 20%;
+  top: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.form-div input {
+  position: relative;
+  height: 30px;
+  width: 100%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid gray;
+  font-size: 16px;
+  color: rgb(0, 0, 0, 0.5);
+  background: none;
+  transition: 0.3s;
+}
+.form-div input:hover {
+  border-bottom: 2px solid rgb(0, 0, 0, 0.5);
+}
+.show-password-div {
+  position: relative;
+  height: 10%;
+  width: 60%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.show-password-div p {
+  font-size: 16px;
+  color: rgb(0, 0, 0, 0.5);
+}
+.show-password-div input {
+  position: relative;
+  height: 20px;
+  width: 20px;
+  outline: none;
+}
+.form-div button {
+  position: relative;
+  height: 40px;
+  width: 120px;
+  border-radius: 25px;
+  border: 1px solid gray;
+  outline: none;
+  background: none;
+  font-size: 16px;
+  color: gray;
+  cursor: pointer;
+}
+.form-div button:active {
+  background: gray;
+  color: white;
+}
+.form-div p {
+  font-size: 16px;
+  color: gray;
+  padding: 0;
+  margin: 0;
+}
+.login-using-div {
+  position: relative;
+  height: 75px;
+  width: 60%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.login-using-div button {
+  position: relative;
+  height: 75px;
+  width: 75px;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+}
+
+.form-div a {
+  position: relative;
+  align-self: flex-end;
+  text-decoration: none;
+  color: #4870ff;
+}
