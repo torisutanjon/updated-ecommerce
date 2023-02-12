@@ -12,7 +12,12 @@ export const checkRegisterField = async (email:string, username:string,   passwo
     return true
 }
 
-export const checkLoginField = (email:string, password:string) => {
-    console.log(email)
-    console.log(password)
+export const checkLoginField = async (email:string, password:string) => {
+    var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    if(email === "" || password === "") return alert("Please fill all fields!")
+    
+    if(!email.match(validRegex)) return alert("Invalid Email")
+
+    return true
 }

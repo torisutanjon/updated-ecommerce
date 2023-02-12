@@ -5,7 +5,7 @@ import React from "react";
 import { checkRegisterField } from "../Hooks/ValidateFields";
 
 //api
-import { registerAccount } from "../API/Accout";
+import { registerAccount } from "../API/Account";
 
 //assets
 import "../Assets/Styles/SignUpStyle.css";

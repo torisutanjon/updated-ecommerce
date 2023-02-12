@@ -1,5 +1,12 @@
 //dependencies
 import React, { useEffect } from "react";
+import Cookies from "universal-cookie";
+
+//hooks
+import { checkLoginField } from "../Hooks/ValidateFields";
+
+//api
+import { loginAccount } from "../API/Account";
 
 //assets
 import "../Assets/Styles/SignInStyle.css";
@@ -30,6 +37,36 @@ export const SignIn = () => {
     }
   };
 
+  const signInHandler = async () => {
+    let email_input = document.getElementById(
+      "email-input"
+    ) as HTMLInputElement;
+    let password_input = document.getElementById(
+      "password-input"
+    ) as HTMLInputElement;
+
+    await checkLoginField(email_input.value, password_input.value)
+      .then(async (res) => {
+        if (res === true) {
+          await loginAccount(email_input.value, password_input.value)
+            .then((loginRes: any) => {
+              if (loginRes?.status === 200) {
+                const cookie = new Cookies();
+                cookie.set("user", loginRes.data.token, { path: "/" });
+                alert(loginRes?.data?.message);
+                window.location.href = "/";
+              }
+            })
+            .catch((err: any) => {
+              if (err.response?.status === 401)
+                return alert(err.response?.data?.message);
+              return console.log(err);
+            });
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     document.title = "Sign In";
   });
@@ -42,7 +79,7 @@ export const SignIn = () => {
         <p>E-Commerce</p>
       </div>
       <div className="form-div">
-        <input type="text" placeholder="Username" />
+        <input type="email" placeholder="Email" id="email-input" />
         <input type="password" placeholder="Password" id="password-input" />
         <div className="show-password-div">
           <p>Show Password</p>
@@ -53,7 +90,7 @@ export const SignIn = () => {
             onClick={() => showPasswordHandler()}
           />
         </div>
-        <button>login</button>
+        <button onClick={() => signInHandler()}>login</button>
         <p>or</p>
         <p>Login using:</p>
         <div className="login-using-div">
