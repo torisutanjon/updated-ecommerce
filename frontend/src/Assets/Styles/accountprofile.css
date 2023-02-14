@@ -1,0 +1,177 @@
+@import url("https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Inter:wght@300;500&family=JetBrains+Mono:wght@100;200;300;400;500&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400;1,500&family=Open+Sans:wght@300&family=Paprika&family=Roboto:wght@100;300;400;500&display=swap");
+.profile-body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: white;
+  overflow: hidden;
+}
+
+.tahoma {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.arvo {
+  font-family: "Arvo", serif;
+}
+
+header {
+  position: relative;
+  height: 10%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+header p {
+  padding-left: 2.5%;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffa500;
+}
+main {
+  position: relative;
+  height: 90%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+main .side-bar {
+  position: relative;
+  height: 100%;
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  overflow-y: auto;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+main .side-bar-header {
+  position: relative;
+  height: 100px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: rgb(0, 0, 0);
+}
+
+main .side-bar-option {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: rgb(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+main .side-bar-option:hover {
+  background: #fff7e8;
+}
+main .main {
+  position: relative;
+  height: 100%;
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+main .main .info-container {
+  position: relative;
+  height: 60%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+main .title-div {
+  position: relative;
+  height: 20%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding-left: 5%;
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(0, 0, 0, 0.75);
+}
+
+main .info-div {
+  position: relative;
+  height: 80%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding-left: 5%;
+}
+
+main .profile-infos {
+  position: relative;
+  height: 100%;
+  width: 50%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-row: 75px;
+}
+main .profile-infos div {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-evenly;
+}
+main .profile-infos div p {
+  font-size: 20px;
+  color: rgb(0, 0, 0, 0.75);
+  margin: 0;
+  padding: 0;
+}
+main .info-input {
+  font-size: 16px;
+  color: rgb(0, 0, 0, 0.5);
+  outline: none;
+  border: none;
+  border-bottom: 1px solid rgb(0, 0, 0, 0.5);
+}
+main .image-div {
+  position: relative;
+  height: 100%;
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+main .image-div div {
+  position: relative;
+  height: 60%;
+  width: 60%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+}
+
+button {
+  position: relative;
+  height: 35px;
+  width: 125px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  background: none;
+  outline: none;
+  cursor: pointer;
+}

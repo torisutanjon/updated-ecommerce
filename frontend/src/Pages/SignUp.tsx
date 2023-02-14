@@ -14,6 +14,12 @@ import fb_icon from "../Assets/Images/fb-icon-50-radius.png";
 
 export const SignUp = () => {
   const registerHandler = async () => {
+    const firstname = document.getElementById(
+      "firstname-input"
+    ) as HTMLInputElement;
+    const lastname = document.getElementById(
+      "lastname-input"
+    ) as HTMLInputElement;
     const email = document.getElementById("email-input") as HTMLInputElement;
     const username = document.getElementById(
       "username-input"
@@ -26,6 +32,8 @@ export const SignUp = () => {
     ) as HTMLInputElement;
 
     await checkRegisterField(
+      firstname.value,
+      lastname.value,
       email.value,
       username.value,
       password.value,
@@ -33,13 +41,22 @@ export const SignUp = () => {
     )
       .then(async (checkRes) => {
         if (checkRes === true) {
-          await registerAccount(email.value, username.value, password.value)
+          await registerAccount(
+            firstname.value,
+            lastname.value,
+            email.value,
+            username.value,
+            password.value
+          )
             .then((registerRes: any) => {
               if (registerRes.response?.status === 409)
                 return alert(registerRes.response.data.message);
 
               if (registerRes?.status === 201)
-                return alert(registerRes.data.message);
+                return (
+                  alert(registerRes.data.message),
+                  (window.location.href = "/sign-in")
+                );
             })
             .catch((registerErr: any) => {
               console.log(registerErr);
@@ -70,6 +87,8 @@ export const SignUp = () => {
       </div>
       <div className="main-form">
         <div className="info-form">
+          <input type="text" placeholder="First Name" id="firstname-input" />
+          <input type="text" placeholder="Last Name" id="lastname-input" />
           <input type="email" placeholder="Email" id="email-input" />
           <input type="text" placeholder="Username" id="username-input" />
           <input type="password" placeholder="Password" id="password-input" />

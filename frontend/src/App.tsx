@@ -70,6 +70,14 @@ const Appliances = lazy(() =>
   })
 );
 
+const AccountPageSettings = lazy(() =>
+  import("./Pages/AccountProfile").then((module) => {
+    return {
+      default: module.AccountProfile,
+    };
+  })
+);
+
 function App() {
   return (
     <BrowserRouter>
@@ -88,6 +96,7 @@ function App() {
           <Route path="/hand-tools" element={<HandTools />} />
           <Route path="/gadgets" element={<GadgetPage />} />
           <Route path="/appliances" element={<Appliances />} />
+          <Route path="/profile/:userID" element={<AccountPageSettings />} />
         </Routes>
       </div>
     </BrowserRouter>

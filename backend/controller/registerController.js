@@ -13,6 +13,10 @@ export const registerPost = async (req, res) => {
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
   await USER_ACCOUNT_MODEL.create({
+    name: {
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+    },
     username: req.body.username,
     email: req.body.email,
     password: hashedPassword,

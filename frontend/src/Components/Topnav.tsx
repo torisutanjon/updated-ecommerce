@@ -9,26 +9,6 @@ import "../Assets/Styles/mainstyle.css";
 import { checkLoginStatus } from "../API/Account";
 import { AxiosResponse } from "axios";
 
-//class
-
-// class CheckLogin {
-//   firstMessage = (isLoggedIn: Boolean) => {
-//     if (isLoggedIn === true) {
-//       return "Hello,";
-//     } else {
-//       return "Not Signed In?";
-//     }
-//   };
-
-//   secondMessage = (isLoggedIn: Boolean) => {
-//     if (isLoggedIn === true) {
-//       return "USER ACCOUNT";
-//     } else {
-//       return "Sign In Here";
-//     }
-//   };
-// }
-
 export const Topnav = () => {
   const [firstMessage, setFirstMessage] = useState("Not Signed In?");
   const [secondMessage, setSecondMessage] = useState("Sign In Here");
