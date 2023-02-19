@@ -7,22 +7,12 @@ import { checkLoginField } from "../Hooks/ValidateFields";
 
 //api
 import { loginAccount } from "../API/Account";
+import { useFetch } from "../Hooks/UseFetch";
 
 //assets
 import "../Assets/Styles/SignInStyle.css";
-import google_icon from "../Assets/Images/google-icon.png";
-import fb_icon from "../Assets/Images/fb-icon-50-radius.png";
 
 export const SignIn = () => {
-  const buttonBackgroundHandler = (url: string) => {
-    return {
-      background: `url("${url}")`,
-      backgroundSize: `cover`,
-      backgroundPosition: `center`,
-      backgroundRepeat: `no-repeat`,
-    };
-  };
-
   const showPasswordHandler = () => {
     const checkboxElement = document.getElementById(
       "checkbox-input"
@@ -67,8 +57,25 @@ export const SignIn = () => {
       .catch((err) => console.log(err));
   };
 
+  const { handleGoogle, loading, error } = useFetch("/oauth/sign-in");
+
   useEffect(() => {
     document.title = "Sign In";
+    /* global google */
+    if (window.google) {
+      google.accounts.id.initialize({
+        client_id: process.env.REACT_APP_CLIENT_ID,
+        callback: handleGoogle,
+      });
+
+      google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+        type: "standard",
+        theme: "white",
+        size: "medium",
+        text: "signin_with",
+        shape: "rectangle",
+      });
+    }
   });
   return (
     <div className="sign-in-content">
@@ -94,8 +101,8 @@ export const SignIn = () => {
         <p>or</p>
         <p>Login using:</p>
         <div className="login-using-div">
-          <button style={buttonBackgroundHandler(google_icon)}></button>
-          <button style={buttonBackgroundHandler(fb_icon)}></button>
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          {loading ? <div>Loading....</div> : <div id="signInDiv"></div>}
         </div>
         <a href="/sign-up">Sign Up</a>
       </div>

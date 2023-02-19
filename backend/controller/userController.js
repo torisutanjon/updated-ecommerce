@@ -16,9 +16,10 @@ export const getUser = async (req, res) => {
       async (err, decoded) => {
         if (err) return console.log(err);
 
+        console.log(decoded);
         //if no error check if user exists
         await USER_ACCOUNT_MODEL.findOne({
-          username: decoded.username,
+          _id: decoded.id,
         })
           .then(async (user) => {
             //if not exists return false
@@ -91,27 +92,52 @@ export const checkPassword = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-  const salt = await bcrypt.genSalt(Number(process.env.SALT));
-  const hashedPassword = await bcrypt.hash(req.body.password, salt);
-
-  await USER_ACCOUNT_MODEL.findByIdAndUpdate(
-    {
-      _id: req.body._id,
-    },
-    {
-      name: {
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
+  if (req.body.password === "") {
+    await USER_ACCOUNT_MODEL.findByIdAndUpdate(
+      {
+        _id: req.body._id,
       },
-      username: req.body.username,
-      email: req.body.email,
-      password: hashedPassword,
-    }
-  )
-    .then(() => {
-      return res.status(204).send({ message: "Account Updated Successfully" });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      {
+        name: {
+          firstname: req.body.firstname,
+          lastname: req.body.lastname,
+        },
+        username: req.body.username,
+        email: req.body.email,
+      }
+    )
+      .then(() => {
+        return res
+          .status(204)
+          .send({ message: "Account Updated Successfully" });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } else {
+    const salt = await bcrypt.genSalt(Number(process.env.SALT));
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    await USER_ACCOUNT_MODEL.findByIdAndUpdate(
+      {
+        _id: req.body._id,
+      },
+      {
+        name: {
+          firstname: req.body.firstname,
+          lastname: req.body.lastname,
+        },
+        username: req.body.username,
+        email: req.body.email,
+        password: hashedPassword,
+      }
+    )
+      .then(() => {
+        return res
+          .status(204)
+          .send({ message: "Account Updated Successfully" });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 };

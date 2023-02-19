@@ -8,6 +8,7 @@ export const loginPagePost = async (req, res) => {
     email: req.body.email,
   })
     .then(async (user) => {
+      console.log(user);
       if (!user)
         return res.status(401).send({ message: "Invalid Email or Password" });
 

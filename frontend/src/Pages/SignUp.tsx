@@ -1,16 +1,15 @@
 //dependencies
-import React from "react";
+import React, { useEffect } from "react";
 
 //hooks
 import { checkRegisterField } from "../Hooks/ValidateFields";
+import { useFetch } from "../Hooks/UseFetch";
 
 //api
 import { registerAccount } from "../API/Account";
 
 //assets
 import "../Assets/Styles/SignUpStyle.css";
-import google_icon from "../Assets/Images/google-icon.png";
-import fb_icon from "../Assets/Images/fb-icon-50-radius.png";
 
 export const SignUp = () => {
   const registerHandler = async () => {
@@ -68,14 +67,26 @@ export const SignUp = () => {
       });
   };
 
-  const backgroundHandler = (url: string) => {
-    return {
-      background: `url("${url}")`,
-      backgroundSize: `cover`,
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-    };
-  };
+  const { handleGoogle, loading, error } = useFetch("/oauth/sign-up");
+
+  useEffect(() => {
+    document.title = "CREATE ACCOUNT";
+    /* global google */
+    if (window.google) {
+      google.accounts.id.initialize({
+        client_id: process.env.REACT_APP_CLIENT_ID,
+        callback: handleGoogle,
+      });
+
+      google.accounts.id.renderButton(document.getElementById("signUpDiv"), {
+        type: "standard",
+        theme: "white",
+        size: "medium",
+        text: "signup_with",
+        shape: "rectangle",
+      });
+    }
+  }, [handleGoogle]);
 
   return (
     <div className="sign-up-content">
@@ -104,8 +115,13 @@ export const SignUp = () => {
           <p>Create Account Using:</p>
           <br />
           <div className="option-div">
-            <button style={backgroundHandler(google_icon)}></button>
-            <button style={backgroundHandler(fb_icon)}></button>
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            {loading ? (
+              <div>Loading....</div>
+            ) : (
+              <div id="signUpDiv" data-text="signup_with"></div>
+            )}
+            {/* <button style={backgroundHandler(fb_icon)}></button> */}
           </div>
           <div className="already-have-account-div">
             <p>Already Have Account?</p>

@@ -7,6 +7,7 @@ import { conn } from "./config/db_config.js";
 import loginRoute from "./routes/loginroute.js";
 import registerRoute from "./routes/registerRoute.js";
 import userRoute from "./routes/userRoute.js";
+import oauthRoute from "./routes/oauthRoute.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/login", loginRoute);
 app.use("/register", registerRoute);
 app.use("/get-user", userRoute);
+app.use("/oauth", oauthRoute);
 
 //use env file
 dotenv.config();

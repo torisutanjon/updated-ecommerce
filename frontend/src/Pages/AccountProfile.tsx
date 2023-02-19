@@ -64,38 +64,48 @@ export const AccountProfile = () => {
       .catch((err: any) => console.log(err));
   };
 
+  const updateUserHandler = async () => {
+    await updateUser(
+      userID,
+      getInputsHandler()[0].value,
+      getInputsHandler()[2].value,
+      getInputsHandler()[4].value,
+      getInputsHandler()[6].value,
+      getInputsHandler()[5].value
+    )
+      .then((updateUserRes: any) => {
+        if (updateUserRes?.status === 204) {
+          alert("Account Updated Successfully");
+          window.location.reload();
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   const updateHandler = async (command: string) => {
     if (command === "update") {
-      await checkPassword(userID, getInputsHandler()[1].value).then(
-        async (checkPasswordRes: any) => {
-          if (checkPasswordRes?.response?.status === 401)
-            return alert(checkPasswordRes?.response?.data?.message);
-          if (checkPasswordRes?.status === 200) {
-            await checkUpdateField(
-              getInputsHandler()[3].value,
-              getInputsHandler()[5].value
-            ).then(async (checkUpdateFieldRes: any) => {
-              if (checkUpdateFieldRes === true) {
-                await updateUser(
-                  userID,
-                  getInputsHandler()[0].value,
-                  getInputsHandler()[2].value,
-                  getInputsHandler()[4].value,
-                  getInputsHandler()[6].value,
-                  getInputsHandler()[5].value
-                )
-                  .then((updateUserRes: any) => {
-                    if (updateUserRes?.status === 204) {
-                      alert("Account Updated Successfully");
-                      window.location.reload();
-                    }
-                  })
-                  .catch((err) => console.log(err));
-              }
-            });
+      if (
+        getInputsHandler()[1].value === "" &&
+        getInputsHandler()[3].value === "" &&
+        getInputsHandler()[5].value === ""
+      ) {
+        updateUserHandler();
+      } else {
+        await checkPassword(userID, getInputsHandler()[1].value).then(
+          async (checkPasswordRes: any) => {
+            if (checkPasswordRes?.response?.status === 401)
+              return alert(checkPasswordRes?.response?.data?.message);
+            if (checkPasswordRes?.status === 200) {
+              await checkUpdateField(
+                getInputsHandler()[3].value,
+                getInputsHandler()[5].value
+              ).then(async (checkUpdateFieldRes: any) => {
+                updateUserHandler();
+              });
+            }
           }
-        }
-      );
+        );
+      }
     } else {
       setOnEditStatus(true);
       setInputsHandler(

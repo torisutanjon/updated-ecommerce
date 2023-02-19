@@ -23,7 +23,7 @@ const USER_ACCOUNT_SCHEMA = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   { collection: "useraccounts" }
