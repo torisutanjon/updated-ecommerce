@@ -2,6 +2,8 @@
 import Cookies from "universal-cookie";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import mongoose from "mongoose";
+import nodemailer from "nodemailer";
 
 import { USER_ACCOUNT_MODEL } from "../model/Account.js";
 
@@ -68,6 +70,8 @@ export const getUserInfo = async (req, res) => {
       },
       username: user.username,
       email: user.email,
+      contactnumber: user.contactnumber,
+      emailverified: user.emailverified,
     };
 
     return res.status(200).send({ user: userInfo });
@@ -104,6 +108,7 @@ export const updateUser = async (req, res) => {
         },
         username: req.body.username,
         email: req.body.email,
+        contactnumber: req.body.contactnumber,
       }
     )
       .then(() => {
@@ -128,6 +133,7 @@ export const updateUser = async (req, res) => {
         },
         username: req.body.username,
         email: req.body.email,
+        contactnumber: req.body.contactnumber,
         password: hashedPassword,
       }
     )
@@ -140,4 +146,76 @@ export const updateUser = async (req, res) => {
         console.log(err);
       });
   }
+};
+
+export const verifyEmail = async (req, res) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.EMAIL_USERNAME,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    const user = await USER_ACCOUNT_MODEL.findOne({
+      _id: req.body._id,
+    });
+
+    if (!user)
+      return res.status(404).send({ message: "Error on finding user" });
+
+    const verificationToken = jwt.sign(
+      { email: user.email },
+      process.env.NODEMAILER_SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+
+    const userIDToken = jwt.sign(
+      { id: user._id },
+      process.env.NODEMAILER_SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+
+    const url = `http://localhost:3000/verify-email/${userIDToken}/${verificationToken}`;
+
+    await transporter
+      .sendMail({
+        to: user.email,
+        subject: "Verify Account",
+        html: `Click <a href = "${url}">here</a> to verify your email.`,
+      })
+      .then(() => {
+        return res
+          .status(200)
+          .send({ message: `Verification mail was sent to ${user.email}` });
+      })
+      .catch(() => {
+        return res.status(500).send({
+          message: `Error on sending verification mail to ${user.email}`,
+        });
+      });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const confirmVerification = async (req, res) => {
+  console.log(req.body);
+
+  await USER_ACCOUNT_MODEL.findOne({
+    _id: jwt.decode(req.body.userIDToken, process.env.NODEMAILER_SECRET_KEY).id,
+  })
+    .then(async (user) => {
+      if (!user) return res.status(404).send({ message: "No user was found" });
+      if (user.email !== jwt.decode(req.body.userToken).email)
+        return res.status(404).send({ message: "Token did not match" });
+
+      user.emailverified = true;
+      user.save();
+      return res.status(200).send({ message: "Email Verified!" });
+    })
+    .catch((err) => {
+      return err.status(500).send({ message: "Internal Server Error" });
+    });
 };

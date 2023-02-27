@@ -3,7 +3,12 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 //api
-import { getUserInfo, updateUser, checkPassword } from "../API/Account";
+import {
+  getUserInfo,
+  updateUser,
+  checkPassword,
+  verifyEmail,
+} from "../API/Account";
 
 //hooks
 import { checkUpdateField } from "../Hooks/ValidateFields";
@@ -18,6 +23,8 @@ export const AccountProfile = () => {
     lastname: "",
     username: "",
     email: "",
+    contactnumber: "",
+    emailverified: null,
   });
   const [onEditStatus, setOnEditStatus] = useState(true);
 
@@ -34,7 +41,8 @@ export const AccountProfile = () => {
     firstname: string,
     lastname: string,
     username: string,
-    email: string
+    email: string,
+    contactnumber: string
   ) => {
     getInputsHandler()[0].value = firstname;
     getInputsHandler()[1].value = "";
@@ -43,22 +51,27 @@ export const AccountProfile = () => {
     getInputsHandler()[4].value = username;
     getInputsHandler()[5].value = "";
     getInputsHandler()[6].value = email;
+    getInputsHandler()[7].value = contactnumber;
   };
 
   const getUserHandler = async () => {
     await getUserInfo(userID)
       .then(async (getUserRes: any) => {
+        console.log(getUserRes);
         setInputsHandler(
           getUserRes.data.user.name.firstname,
           getUserRes.data.user.name.lastname,
           getUserRes.data.user.username,
-          getUserRes.data.user.email
+          getUserRes.data.user.email,
+          getUserRes.data.user.contactnumber
         );
         setUser({
           firstname: getUserRes.data.user.name.firstname,
           lastname: getUserRes.data.user.name.lastname,
           username: getUserRes.data.user.username,
           email: getUserRes.data.user.email,
+          contactnumber: getUserRes.data.user.contactnumber,
+          emailverified: getUserRes.data.user.emailverified,
         });
       })
       .catch((err: any) => console.log(err));
@@ -71,6 +84,7 @@ export const AccountProfile = () => {
       getInputsHandler()[2].value,
       getInputsHandler()[4].value,
       getInputsHandler()[6].value,
+      getInputsHandler()[7].value,
       getInputsHandler()[5].value
     )
       .then((updateUserRes: any) => {
@@ -112,14 +126,27 @@ export const AccountProfile = () => {
         user.firstname,
         user.lastname,
         user.username,
-        user.email
+        user.email,
+        user?.contactnumber
       );
     }
   };
 
+  const verifyEmailHandler = async () => {
+    await verifyEmail(userID)
+      .then((res: any) => {
+        if (res?.status === 200) {
+          alert(res?.data?.message);
+        }
+      })
+      .catch((err: any) => console.log(err));
+  };
+
   useEffect(() => {
     getUserHandler();
+    document.title = "Account Settings";
   }, []);
+
   return (
     <div className="profile-body">
       <header>
@@ -206,14 +233,43 @@ export const AccountProfile = () => {
                   </div>
                   <div>
                     <p>EMAIL</p>
+                    <div className="dynamic_p_div">
+                      <input
+                        type="text"
+                        id="email-input"
+                        className="info-input"
+                        readOnly={onEditStatus}
+                      />
+                      {user.emailverified === false ? (
+                        <>
+                          <p
+                            className="dynamic_p"
+                            onClick={() => verifyEmailHandler()}
+                          >
+                            Verify
+                          </p>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <p>Contact Number</p>
                     <input
-                      type="text"
-                      id="email-input"
+                      type="number"
+                      id="contactnumber-input"
                       className="info-input"
                       readOnly={onEditStatus}
                     />
                   </div>
-                  <div style={{ alignItems: "end", flexDirection: "row" }}>
+                  <div
+                    style={{
+                      height: "100%",
+                      alignItems: "end",
+                      flexDirection: "row",
+                    }}
+                  >
                     {onEditStatus === true ? (
                       <button onClick={() => setOnEditStatus(false)}>
                         Change

@@ -13,7 +13,9 @@ export const registerAccount = async (firstname:string, lastname:string, email:s
                 lastname:lastname,
                 username: username,
                 email:email,
-                password:password
+                contactnumber: "",
+                password:password,
+                emailverified: false
             }
         })
         return res
@@ -97,7 +99,8 @@ export const checkPassword = async (id:string| undefined, password:string) => {
 }
 
 
-export const updateUser = async (id:string|undefined, firstname: string, lastname:string,username:string, email:string, password:string) => {
+export const updateUser = async (id:string|undefined, firstname: string, lastname:string,username:string, email:string,contactnumber:string, password:string) => {
+    console.log("updateUser clicked")
     try {
         const res = await axios({
             headers:{
@@ -111,7 +114,48 @@ export const updateUser = async (id:string|undefined, firstname: string, lastnam
                 lastname:lastname,
                 username:username,
                 email:email,
+                contactnumber:contactnumber,
                 password:password
+            }
+        })
+
+        return res
+    } catch (error) {
+        return error
+    }
+}
+
+
+export const verifyEmail = async (userID:string | undefined) => {
+    try {
+        const res = await axios({
+            headers: {
+                "Content-type": "application/json"
+            },
+            method: "POST",
+            url: "/get-user/verify-email",
+            data: {
+                _id: userID
+            }
+        })
+
+        return res
+    } catch (error) {
+        return error
+    }
+}
+
+export const confirmVerifyEmail = async (userIDToken:string|undefined, userToken: string | undefined) => {
+    try {
+        const res = await axios({
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            url: "/get-user/confirm-verification",
+            data:{
+                userIDToken: userIDToken,
+                userToken: userToken
             }
         })
 

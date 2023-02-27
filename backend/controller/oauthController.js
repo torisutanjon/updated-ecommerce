@@ -45,6 +45,8 @@ export const signUp = async (req, res) => {
           },
           username: profile.email,
           email: profile.email,
+          contactnumber: "",
+          emailverified: false,
         })
           .then(() => {
             return res

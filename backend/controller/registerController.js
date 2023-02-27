@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import { USER_ACCOUNT_MODEL } from "../model/Account.js";
 
 export const registerPost = async (req, res) => {
+  console.log(req.body);
   if (
     await USER_ACCOUNT_MODEL.findOne({
       email: req.body.email,
@@ -19,7 +20,9 @@ export const registerPost = async (req, res) => {
     },
     username: req.body.username,
     email: req.body.email,
+    contactnumber: req.body.contactnumber,
     password: hashedPassword,
+    emailverified: req.body.emailverified,
   });
 
   res.status(201).send({ message: "Account Created Successfully" });

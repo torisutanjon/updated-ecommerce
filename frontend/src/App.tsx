@@ -78,6 +78,14 @@ const AccountPageSettings = lazy(() =>
   })
 );
 
+const VerifyEmail = lazy(() =>
+  import("./Pages/VerifyEmail").then((module) => {
+    return {
+      default: module.VerifyEmail,
+    };
+  })
+);
+
 function App() {
   return (
     <BrowserRouter>
@@ -97,6 +105,10 @@ function App() {
           <Route path="/gadgets" element={<GadgetPage />} />
           <Route path="/appliances" element={<Appliances />} />
           <Route path="/profile/:userID" element={<AccountPageSettings />} />
+          <Route
+            path="/verify-email/:userIDToken/:userToken"
+            element={<VerifyEmail />}
+          />
         </Routes>
       </div>
     </BrowserRouter>

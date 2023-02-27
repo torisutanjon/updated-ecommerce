@@ -21,9 +21,17 @@ const USER_ACCOUNT_SCHEMA = new mongoose.Schema(
       type: String,
       required: true,
     },
+    contactnumber: {
+      type: String,
+      required: false,
+    },
     password: {
       type: String,
       required: false,
+    },
+    emailverified: {
+      type: Boolean,
+      required: true,
     },
   },
   { collection: "useraccounts" }
