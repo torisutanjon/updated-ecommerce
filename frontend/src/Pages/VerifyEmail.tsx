@@ -29,11 +29,17 @@ export const VerifyEmail = () => {
 
     await confirmVerifyEmail(userIDToken, userToken)
       .then((res: any) => {
-        if (res?.status === 200) alert(res.data.message);
-        window.location.href = "/";
+        if (res?.status === 200) {
+          alert(res?.data?.message);
+          window.location.href = "/";
+        }
+        if (res?.response?.status === 404) {
+          alert(res?.response?.data?.message);
+          window.location.reload();
+        }
       })
       .catch((err: any) => {
-        console.log(err);
+        alert(err);
       });
   };
 

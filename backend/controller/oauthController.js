@@ -26,7 +26,6 @@ export const signUp = async (req, res) => {
 
     const profile = verifyToken.payload;
 
-    console.log(profile);
     await USER_ACCOUNT_MODEL.findOne({
       email: profile.email,
     })

@@ -17,8 +17,6 @@ export const getUser = async (req, res) => {
       //jwt verify callback
       async (err, decoded) => {
         if (err) return console.log(err);
-
-        console.log(decoded);
         //if no error check if user exists
         await USER_ACCOUNT_MODEL.findOne({
           _id: decoded.id,
@@ -177,6 +175,9 @@ export const verifyEmail = async (req, res) => {
       { expiresIn: "1h" }
     );
 
+    user.verificationToken = verificationToken;
+    user.save();
+
     const url = `http://localhost:3000/verify-email/${userIDToken}/${verificationToken}`;
 
     await transporter
@@ -208,10 +209,11 @@ export const confirmVerification = async (req, res) => {
   })
     .then(async (user) => {
       if (!user) return res.status(404).send({ message: "No user was found" });
-      if (user.email !== jwt.decode(req.body.userToken).email)
+      if (user.verificationToken !== req.body.userToken)
         return res.status(404).send({ message: "Token did not match" });
 
       user.emailverified = true;
+      user.verificationToken = null;
       user.save();
       return res.status(200).send({ message: "Email Verified!" });
     })

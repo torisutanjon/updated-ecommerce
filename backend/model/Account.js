@@ -33,6 +33,11 @@ const USER_ACCOUNT_SCHEMA = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
+    verificationToken: {
+      type: String,
+      required: false,
+      default: null,
+    },
   },
   { collection: "useraccounts" }
 );
