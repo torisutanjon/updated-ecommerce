@@ -10,9 +10,8 @@ import { getTrending } from "../API/Api";
 export const TrendingItems = () => {
   const trendingData = getTrending();
   return (
-    <div className="items-container">
+    <div className="relative h-full w-full grid grid-cols-4">
       {trendingData.map(({ id }, key) => {
-        console.log(id);
         return <ItemModal key={key} />;
       })}
     </div>

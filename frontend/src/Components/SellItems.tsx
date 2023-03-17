@@ -1,34 +1,47 @@
 //dependencies
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
+//hooks
+import {
+  checkInputValue,
+  checkInputArrayValue,
+  checkStringArrayState,
+} from "../Hooks/Field";
+
+//api
+import { sellItemsAPI } from "../API/SellItems";
 
 //assets
 import add_image from "../Assets/Images/add-icon.png";
 import delete_image from "../Assets/Images/delete-icon.png";
 
 export const SellItems = () => {
-  const [elements, setElements] = useState<any[]>();
-  const [elementID, setElementID] = useState<any[]>();
+  const [variations, setVariations] = useState<Array<JSX.Element>>();
+  const [variationsID, setVariationsID] = useState<Array<number>>();
+  const [itemImage, setItemImage] = useState<Array<string>>();
 
-  const setElementIDHandler = () => {
+  //set variation id
+  const setVariationIDHandler = () => {
     let id = 0;
     let idHolder = [];
-    if (elementID === undefined) {
+    if (variationsID === undefined) {
       idHolder.push(id);
-      setElementID(idHolder);
+      setVariationsID(idHolder);
     } else {
-      idHolder = [...elementID];
-      for (let i = 0; i < elementID.length; i++) {
-        while (id <= elementID[i]) {
+      idHolder = [...variationsID];
+      for (let i = 0; i < variationsID.length; i++) {
+        while (id <= variationsID[i]) {
           id++;
         }
       }
       idHolder.push(id);
-      setElementID(idHolder);
+      setVariationsID(idHolder);
     }
     return id;
   };
 
-  const createElementHandler = (id: number | undefined) => {
+  //create vairation element
+  const createVariationHandler = (id: number | undefined) => {
     return (
       <div className="sell-item-variation-div" key={id} id={id!.toString()}>
         <input
@@ -37,34 +50,154 @@ export const SellItems = () => {
           placeholder="e.g. Type: Value"
         />
         <img
+          className="delete-image-button"
           src={delete_image}
           alt=""
-          onClick={() => deleteElementHandler(id)}
+          id={id!.toString()}
         />
       </div>
     );
   };
 
-  const setElementHandler = () => {
-    const id = setElementIDHandler();
-    const element = createElementHandler(id);
+  //set variation element
+  const setVariationHandler = () => {
+    const id = setVariationIDHandler();
+    const element = createVariationHandler(id);
 
     let elementsHolder = [];
 
-    if (elements === undefined) {
-      elementsHolder.push(element);
-      setElements(elementsHolder);
+    if (variations === undefined) {
+      elementsHolder.push(element!);
+      setVariations(elementsHolder);
     } else {
-      elementsHolder = [...elements];
-      elementsHolder.push(element);
-      setElements(elementsHolder);
+      elementsHolder = [...variations];
+      elementsHolder.push(element!);
+      setVariations(elementsHolder);
     }
   };
 
-  const deleteElementHandler = (id: number | undefined) => {
-    let elementHolder = [...elements!];
-    console.log(elementHolder);
+  //delete variation element
+  const deleteVariationHandler = (event: Event) => {
+    const id = parseInt((event.target as HTMLImageElement).id);
+    const index = variationsID?.indexOf(id);
+    let elementsHolder = [...variations!];
+    let elementIDHolder = [...variationsID!];
+    elementIDHolder.splice(index!, 1);
+    elementsHolder.splice(index!, 1);
+    setVariationsID(elementIDHolder);
+    setVariations(elementsHolder);
   };
+
+  //activate input type="file" onclick event
+  const getItemImageHandler = () => {
+    const element = document.getElementById("get-file-input");
+    element!.click();
+  };
+
+  //get input type="file" value on onChange event
+  const setItemImageHandler = (image: Blob) => {
+    let itemImageHolder = [];
+
+    if (itemImage === undefined) {
+      itemImageHolder.push(URL.createObjectURL(image));
+      setItemImage(itemImageHolder);
+    } else {
+      itemImageHolder = [...itemImage];
+      itemImageHolder.push(URL.createObjectURL(image));
+      setItemImage(itemImageHolder);
+    }
+    (document.getElementById("get-file-input") as HTMLInputElement).value = "";
+  };
+
+  //delete item image
+  const deleteItemImageHandler = (image: string) => {
+    const index = itemImage?.indexOf(image);
+    let itemImageHolder = [...itemImage!];
+    itemImageHolder.splice(index!, 1);
+    setItemImage(itemImageHolder);
+  };
+
+  //check values before sending to backend
+  const checkValuesHandler = async () => {
+    let status = true;
+    const itemNameRes = await checkInputValue("sell-item-name-input");
+    const itemQuantityRes = await checkInputValue("sell-item-quantity-input");
+    const itemPriceRes = await checkInputValue("sell-item-price-input");
+    const variationsInput = await checkInputArrayValue(
+      "variation-inputs-element"
+    );
+    const itemImageRes = await checkStringArrayState(itemImage);
+
+    if (itemNameRes === false) {
+      return alert("Product name is required!");
+    }
+
+    if (itemQuantityRes === false) {
+      return alert("Product quantity is required!");
+    }
+
+    if (itemPriceRes === false) {
+      return alert("Product price is required!");
+    }
+
+    if (variationsInput.message !== "") {
+      return alert(variationsInput.message);
+    }
+
+    if (itemImageRes.message !== "") {
+      return alert(itemImageRes.message);
+    }
+
+    return status;
+  };
+
+  //call api to send data to backend
+  const createItemHandler = async () => {
+    await checkValuesHandler().then(async (res: any) => {
+      if (res === undefined) {
+        return;
+      } else {
+        const itemName = document.getElementById(
+          "sell-item-name-input"
+        ) as HTMLInputElement;
+        const itemQuantity = document.getElementById(
+          "sell-item-quantity-input"
+        ) as HTMLInputElement;
+        const ItemPrice = document.getElementById(
+          "sell-item-price-input"
+        ) as HTMLInputElement;
+
+        let variationsValueHolder: string[] = [];
+
+        Array.from(
+          document.getElementsByClassName(
+            "variation-inputs-element"
+          ) as HTMLCollectionOf<HTMLInputElement>
+        ).forEach((element) => {
+          variationsValueHolder.push(element.value);
+        });
+
+        await sellItemsAPI(
+          itemName!.value,
+          itemQuantity!.value,
+          ItemPrice!.value,
+          variationsValueHolder,
+          itemImage
+        );
+      }
+    });
+  };
+
+  useEffect(() => {
+    let imageElements = Array.from(
+      document.getElementsByClassName(
+        "delete-image-button"
+      ) as HTMLCollectionOf<HTMLImageElement>
+    );
+    imageElements.forEach((element) => {
+      element.addEventListener("click", deleteVariationHandler, false);
+    });
+  }, [variations]);
 
   return (
     <div className="sell-items-body">
@@ -73,18 +206,18 @@ export const SellItems = () => {
           <p>Product Name:</p>
         </div>
         <div>
-          <input type="text" />
+          <input type="text" id="sell-item-name-input" />
         </div>
         <div>
           <p>Product Variation/s:</p>
         </div>
         <div id="sell-item-variation">
           <>
-            {elements === undefined ? (
+            {variations === undefined ? (
               <></>
             ) : (
               <>
-                {elements.map((data) => {
+                {variations.map((data) => {
                   return data;
                 })}
               </>
@@ -95,7 +228,7 @@ export const SellItems = () => {
             alt=""
             style={{ marginTop: "10px" }}
             onClick={() => {
-              setElementHandler();
+              setVariationHandler();
             }}
           />
         </div>
@@ -103,16 +236,62 @@ export const SellItems = () => {
           <p>Quantity:</p>
         </div>
         <div>
-          <input type="number" />
+          <input type="number" id="sell-item-quantity-input" />
         </div>
         <div>
           <p>Selling Price:</p>
         </div>
         <div>
-          <input type="number" />
+          <input type="number" id="sell-item-price-input" />
         </div>
       </div>
-      <div className="sell-items-image-container"></div>
+      <div className="sell-items-image-container">
+        <div className="sell-items-image-div">
+          <div className="sell-items-image-grid">
+            {itemImage === undefined ? (
+              <></>
+            ) : (
+              <>
+                {itemImage.map((data, key) => {
+                  return (
+                    <div className="sell-item-container" key={key}>
+                      <img src={data} alt="" />
+                      <button
+                        onClick={() => deleteItemImageHandler(data)}
+                      ></button>
+                    </div>
+                  );
+                })}
+              </>
+            )}
+          </div>
+          <p>maximum of four images</p>
+          <input
+            type="file"
+            id="get-file-input"
+            style={{ display: "none" }}
+            accept="image/*"
+            onChange={(e) => {
+              setItemImageHandler(e.target.files![0]);
+            }}
+          />
+          <button type="button" onClick={() => getItemImageHandler()}>
+            Add Image
+          </button>
+        </div>
+        <div className="sell-items-image-options-div">
+          <button type="button" style={{ background: "#d8000080" }}>
+            Clear
+          </button>
+          <button
+            type="button"
+            style={{ background: "#1D930080" }}
+            onClick={() => createItemHandler()}
+          >
+            Save
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

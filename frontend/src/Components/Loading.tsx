@@ -2,18 +2,19 @@
 import React from "react";
 
 //assets
-import "../Assets/Styles/mainstyle.css";
 import loading_gif from "../Assets/Images/loading-gif.gif";
 
 export const LoadingComponent = () => {
   return (
-    <div className="loading-component-body">
+    <div className="relative h-full w-full flex flex-col items-center justify-center">
       <div>
-        <p>Loading Data</p>
+        <p className="text-[32px] text-black/50 cursor-default top-0">
+          Loading Data
+        </p>
       </div>
       <br />
       <div>
-        <img src={loading_gif} alt="" />
+        <img className="relative h-[50px] w-[50px]" src={loading_gif} alt="" />
       </div>
     </div>
   );

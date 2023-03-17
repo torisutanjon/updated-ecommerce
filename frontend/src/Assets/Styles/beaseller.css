@@ -228,12 +228,6 @@
   cursor: pointer;
 }
 
-.sell-items-image-container {
-  position: relative;
-  height: 90%;
-  width: 50%;
-}
-
 .sell-items-infos {
   position: relative;
   height: 100%;
@@ -274,4 +268,102 @@
   font-size: 16px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: rgb(0, 0, 0, 0.5);
+}
+
+.sell-items-image-container {
+  position: relative;
+  height: 90%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sell-items-image-div {
+  position: relative;
+  height: 60%;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.sell-items-image-grid {
+  position: relative;
+  height: 75%;
+  width: 100%;
+  border: 1px solid rgb(0, 0, 0, 0.5);
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+}
+.sell-item-container {
+  position: relative;
+  height: 95%;
+  width: 95%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(128, 128, 128, 0.5);
+}
+
+.sell-item-container img {
+  position: relative;
+  height: 90%;
+  width: 90%;
+}
+
+.sell-items-image-div button {
+  position: relative;
+  height: 30px;
+  width: 125px;
+  border-radius: 10px;
+  border: 0;
+  outline: 0;
+  background: rgb(5, 0, 255, 0.5);
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.sell-item-container button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 15px;
+  width: 15px;
+  background: url("../Images/cross.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+.sell-items-image-div p {
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+  color: rgb(0, 0, 0, 0.5);
+}
+
+.sell-items-image-options-div {
+  position: relative;
+  height: 20%;
+  width: 60%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sell-items-image-options-div button {
+  position: relative;
+  height: 40px;
+  width: 150px;
+  border-radius: 0;
+  font-weight: bold;
+  color: white;
+  border: 0;
+  outline: 0;
 }

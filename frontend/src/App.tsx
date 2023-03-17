@@ -1,6 +1,7 @@
 //dependencies
 import React, { lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
 
 const SignIn = lazy(() =>
   import("./Pages/SignIn").then((module) => {
