@@ -1,6 +1,6 @@
 //dependencies
 import React, { useEffect, useState } from "react";
-
+import { useParams } from "react-router-dom";
 //hooks
 import {
   checkInputValue,
@@ -19,6 +19,8 @@ export const SellItems = () => {
   const [variations, setVariations] = useState<Array<JSX.Element>>();
   const [variationsID, setVariationsID] = useState<Array<number>>();
   const [itemImage, setItemImage] = useState<Array<string>>();
+
+  const { userID } = useParams();
 
   //set variation id
   const setVariationIDHandler = () => {
@@ -97,14 +99,18 @@ export const SellItems = () => {
   //get input type="file" value on onChange event
   const setItemImageHandler = (image: Blob) => {
     let itemImageHolder = [];
-
+    console.log(itemImage?.length);
     if (itemImage === undefined) {
       itemImageHolder.push(URL.createObjectURL(image));
       setItemImage(itemImageHolder);
     } else {
-      itemImageHolder = [...itemImage];
-      itemImageHolder.push(URL.createObjectURL(image));
-      setItemImage(itemImageHolder);
+      if (itemImage.length < 4) {
+        itemImageHolder = [...itemImage];
+        itemImageHolder.push(URL.createObjectURL(image));
+        setItemImage(itemImageHolder);
+      } else {
+        alert("Only 4 product images are needed");
+      }
     }
     (document.getElementById("get-file-input") as HTMLInputElement).value = "";
   };
@@ -123,7 +129,7 @@ export const SellItems = () => {
     const itemNameRes = await checkInputValue("sell-item-name-input");
     const itemQuantityRes = await checkInputValue("sell-item-quantity-input");
     const itemPriceRes = await checkInputValue("sell-item-price-input");
-    const variationsInput = await checkInputArrayValue(
+    const variationsInputRes = await checkInputArrayValue(
       "variation-inputs-element"
     );
     const itemImageRes = await checkStringArrayState(itemImage);
@@ -140,8 +146,8 @@ export const SellItems = () => {
       return alert("Product price is required!");
     }
 
-    if (variationsInput.message !== "") {
-      return alert(variationsInput.message);
+    if (variationsInputRes.message !== "") {
+      return alert(variationsInputRes.message);
     }
 
     if (itemImageRes.message !== "") {
@@ -178,12 +184,20 @@ export const SellItems = () => {
         });
 
         await sellItemsAPI(
+          userID,
           itemName!.value,
           itemQuantity!.value,
           ItemPrice!.value,
           variationsValueHolder,
           itemImage
-        );
+        )
+          .then((res: any) => {
+            alert(res?.data?.message);
+            window.location.reload();
+          })
+          .catch((err: any) => {
+            console.log(err?.response?.statusText);
+          });
       }
     });
   };

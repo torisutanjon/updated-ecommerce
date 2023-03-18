@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import { Topnav } from "../Components/Topnav";
 
 //assets
-import "../Assets/Styles/rtwstyles.css";
+// import "../Assets/Styles/rtwstyles.css";
 import shirt_image from "../Assets/Images/shirts-image.png";
 import short_image from "../Assets/Images/shorts-image.png";
 import pant_image from "../Assets/Images/pant-image.png";
@@ -28,115 +28,241 @@ export const ReadyToWear = () => {
   };
 
   return (
-    <div className="page-body">
+    <div className="absolute top-0 left-0 h-full w-full">
       <Topnav />
-      <div className="rtw-content">
-        <div className="rtw-navlink-container">
-          <div className="rtw-link-container">
-            <a href="/computer-parts">COMPUTER PARTS</a>
-            <a href="/ready-to-wear">READY TO WEAR</a>
-            <a href="/hand-tools">HAND TOOLS</a>
-            <a href="/gadgets">GADGETS</a>
-            <a href="/appliances">APPLIANCES</a>
+      <div className="relative h-[250vh] w-full bg-white flex flex-col items-center justify-center">
+        <div className="relative h-[5vh] w-full bg-[#c7c7c7] flex items-center justify-center z-[1] rtw-navlink-container-box-shadow">
+          <div className="relative h-full w-[60%] flex items-center justify-evenly">
+            <a
+              className="decoration-none text-black/50 transition-duration-[0.3s] font-[500] hover:font-bold"
+              href="/computer-parts"
+            >
+              COMPUTER PARTS
+            </a>
+            <a
+              className="decoration-none text-black/50 transition-duration-[0.3s] font-[500] hover:font-bold"
+              href="/ready-to-wear"
+            >
+              READY TO WEAR
+            </a>
+            <a
+              className="decoration-none text-black/50 transition-duration-[0.3s] font-[500] hover:font-bold"
+              href="/hand-tools"
+            >
+              HAND TOOLS
+            </a>
+            <a
+              className="decoration-none text-black/50 transition-duration-[0.3s] font-[500] hover:font-bold"
+              href="/gadgets"
+            >
+              GADGETS
+            </a>
+            <a
+              className="decoration-none text-black/50 transition-duration-[0.3s] font-[500] hover:font-bold"
+              href="/appliances"
+            >
+              APPLIANCES
+            </a>
           </div>
         </div>
-        <div className="rtw-categorylink-container">
-          <div className="rtw-link-container">
-            <a href="/">MEN</a>
-            <a href="/">WOMEN</a>
-            <a href="/">KIDS</a>
-            <a href="/">TRENDS</a>
-            <a href="/">CLASSICS</a>
+        <div className="relative h-[5vh] w-full bg-[#c7c7c7] flex items-center justify-center">
+          <div className="relative h-full w-[60%] flex items-center justify-evenly">
+            <a
+              className="decoration-none text-black/50 transition-duration-[0.3s] font-[500] hover:font-bold"
+              href="/"
+            >
+              MEN
+            </a>
+            <a
+              className="decoration-none text-black/50 transition-duration-[0.3s] font-[500] hover:font-bold"
+              href="/"
+            >
+              WOMEN
+            </a>
+            <a
+              className="decoration-none text-black/50 transition-duration-[0.3s] font-[500] hover:font-bold"
+              href="/"
+            >
+              KIDS
+            </a>
+            <a
+              className="decoration-none text-black/50 transition-duration-[0.3s] font-[500] hover:font-bold"
+              href="/"
+            >
+              TRENDS
+            </a>
+            <a
+              className="decoration-none text-black/50 transition-duration-[0.3s] font-[500] hover:font-bold"
+              href="/"
+            >
+              CLASSICS
+            </a>
           </div>
         </div>
-        <div className="upper-content">
-          <div className="left">
-            <div className="shirt-container category-container">
-              <div className="category-div" onClick={() => openRTWItemPage()}>
-                <div className="category-profile">
-                  <img src={shirt_image} alt="" />
+        <div className="relative h-[165vh] w-full flex flex-row">
+          <div className="relative h-full w-1/2 flex flex-col items-center justify-center">
+            <div className="relative h-[70%] w-full flex items-center justify-center">
+              <div
+                className="relative h-[99%] w-[99%] bg-[#c7c7c7] self-center justify-self-center cursor-pointer"
+                onClick={() => openRTWItemPage()}
+              >
+                <div className="relative h-[85%] w-full">
+                  <img
+                    className="relative h-full w-full"
+                    src={shirt_image}
+                    alt=""
+                  />
                 </div>
-                <div className="category-name">
-                  <p>SHIRTS</p>
+                <div className="relative h-[5%] w-full flex items-center justify-center">
+                  <p className="text-[22px] font-[500]">SHIRTS</p>
                 </div>
-                <div className="category-link">
-                  <a href="/">SHOP NOW {"->"}</a>
+                <div className="relative h-[10%] w-full flex items-center justify-center">
+                  <a
+                    className="text-[16px] decoration-none text-black/50"
+                    href="/"
+                  >
+                    SHOP NOW {"->"}
+                  </a>
                 </div>
               </div>
             </div>
-            <div className="short-pant-container category-container">
-              <div className="short-container">
-                <div className="category-div" onClick={() => openRTWItemPage()}>
-                  <div className="category-profile">
-                    <img src={short_image} alt="" />
+            <div className="relative w-[99.5%] flex flex-row items-center justify-center">
+              <div className="relative h-full w-1/2 flex items-center justify-center">
+                <div
+                  className="relative h-[99%] w-[99%] bg-[#c7c7c7] self-center justify-self-center cursor-pointer"
+                  onClick={() => openRTWItemPage()}
+                >
+                  <div className="relative h-[85%] w-full">
+                    <img
+                      className="relative h-full w-full"
+                      src={short_image}
+                      alt=""
+                    />
                   </div>
-                  <div className="category-name">
-                    <p>SHORTS</p>
+                  <div className="relative h-[5%] w-full flex items-center justify-center">
+                    <p className="text-[#22px] font-[500]">SHORTS</p>
                   </div>
-                  <div className="category-link">
-                    <a href="/">SHOP NOW {"->"}</a>
+                  <div className="relative h-[10%] w-full flex items-center justify-center">
+                    <a
+                      className="text-[17px] decoration-none text-black/50"
+                      href="/"
+                    >
+                      SHOP NOW {"->"}
+                    </a>
                   </div>
                 </div>
               </div>
-              <div className="pant-container">
-                <div className="category-div" onClick={() => openRTWItemPage()}>
-                  <div className="category-profile">
-                    <img src={pant_image} alt="" />
+              <div className="relative h-full w-1/2 flex items-center justify-center">
+                <div
+                  className="relative h-[99%] w-[99%] bg-[#c7c7c7] self-center justify-self-center cursor-pointer"
+                  onClick={() => openRTWItemPage()}
+                >
+                  <div className="relative h-[85%] w-full">
+                    <img
+                      className="relative h-full w-full"
+                      src={pant_image}
+                      alt=""
+                    />
                   </div>
-                  <div className="category-name">
-                    <p>PANTS</p>
+                  <div className="relative h-[5%] w-full flex items-center justify-center">
+                    <p className="text-[22px] font-[500]">PANTS</p>
                   </div>
-                  <div className="category-link">
-                    <a href="/">SHOP NOW {"->"}</a>
+                  <div className="relative h-[10%] w-full flex items-center justify-center">
+                    <a
+                      className="text-[12px] decoration-none text-black/50"
+                      href="/"
+                    >
+                      SHOP NOW {"->"}
+                    </a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="right">
-            <div className="headwear-container category-container">
-              <div className="category-div" onClick={() => openRTWItemPage()}>
-                <div className="category-profile">
-                  <img src={headwear_image} alt="" />
+          <div className="relative h-full w-1/2 flex flex-col items-center justify-center">
+            <div className="relative h-[30%] w-full flex items-center justify-center">
+              <div
+                className="relative h-[99%] w-[99%] bg-[#c7c7c7] self-center justify-self-center cursor-pointer"
+                onClick={() => openRTWItemPage()}
+              >
+                <div className="relative h-[85%] w-full">
+                  <img
+                    className="relative h-full w-full"
+                    src={headwear_image}
+                    alt=""
+                  />
                 </div>
-                <div className="category-name">
-                  <p>HEADWEAR</p>
+                <div className="relative h-[5%] w-full flex items-center justify-center">
+                  <p className="text-[#22px] font-[500]">HEADWEAR</p>
                 </div>
-                <div className="category-link">
-                  <a href="/">SHOP NOW {"->"}</a>
+                <div className="relative h-[10%] w-full flex items-center justify-center">
+                  <a
+                    className="text-[#17px] decoration-none text-black/50"
+                    href="/"
+                  >
+                    SHOP NOW {"->"}
+                  </a>
                 </div>
               </div>
             </div>
-            <div className="sleeveless-container category-container">
-              <div className="category-div" onClick={() => openRTWItemPage()}>
-                <div className="category-profile">
-                  <img src={sleeveless_image} alt="" />
+            <div className="relative h-[70%] w-full flex items-center justify-center">
+              <div
+                className="relative h-[99%] w-[99%] bg-[#c7c7c7] self-center justify-self-center cursor-pointer"
+                onClick={() => openRTWItemPage()}
+              >
+                <div className="relative h-[85%] w-full">
+                  <img
+                    className="relative h-full w-full"
+                    src={sleeveless_image}
+                    alt=""
+                  />
                 </div>
-                <div className="category-name">
-                  <p>SLEEVELESS</p>
+                <div className="relative h-[5%] w-full flex items-center justify-center">
+                  <p className="text-[#22px] font-[500]">SLEEVELESS</p>
                 </div>
-                <div className="category-link">
-                  <a href="/">SHOP NOW {"->"}</a>
+                <div className="relative h-[10%] w-full flex items-center justify-center">
+                  <a
+                    className="text-[17px] decoration-none text-black/50"
+                    href="/"
+                  >
+                    SHOP NOW {"->"}
+                  </a>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="lower-content">
-          <div className="category-div" onClick={() => openRTWItemPage()}>
-            <div className="category-profile">
-              <img src={underwear_image} alt="" />
+        <div className="relative h-[70vh] w-full grid grid-cols-3 grid-rows-2">
+          <div
+            className="relative h-[99%] w-[99%] bg-[#c7c7c7] self-center justify-self-center cursor-pointer"
+            onClick={() => openRTWItemPage()}
+          >
+            <div className="relative h-[85%] w-full">
+              <img
+                className="relative h-full w-full"
+                src={underwear_image}
+                alt=""
+              />
             </div>
-            <div className="category-name">
-              <p>UNDERWEARS</p>
+            <div className="relative h-[5%] w-full flex items-center justify-center">
+              <p className="text-[22px] font-[500]">UNDERWEARS</p>
             </div>
-            <div className="category-link">
-              <a href="/">SHOP NOW {"->"}</a>
+            <div className="relative h-[10%] w-full flex items-center justify-center">
+              <a className="text-[17px] decoration-none text-black/50" href="/">
+                SHOP NOW {"->"}
+              </a>
             </div>
           </div>
-          <div className="category-div" onClick={() => openRTWItemPage()}>
-            <div className="category-profile">
-              <img src={swimsuits_image} alt="" />
+          <div
+            className="relative h-[99%] w-[99%] bg-[#c7c7c7] self-center justify-self-center cursor-pointer"
+            onClick={() => openRTWItemPage()}
+          >
+            <div className="relative h-[85%] w-full">
+              <img
+                className="relative h-full w-full"
+                src={swimsuits_image}
+                alt=""
+              />
             </div>
             <div className="category-name">
               <p>SWIMSUITS</p>

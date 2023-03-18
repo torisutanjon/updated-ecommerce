@@ -23,7 +23,7 @@ export const RTWItemPage = () => {
   );
 
   return (
-    <div className="page-body">
+    <div className="absolute top-0 left-0 h-full w-full">
       <Topnav />
       <div className="rtw-category-searched-body">
         <div className="rtw-category-searched-title">

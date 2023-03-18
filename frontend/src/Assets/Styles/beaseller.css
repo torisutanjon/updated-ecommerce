@@ -189,7 +189,7 @@
 .sell-items-info-container input {
   position: relative;
   height: 35px;
-  width: 65%;
+  width: 100%;
   border: 1px solid rgb(0, 0, 0, 0.5);
   border-radius: 8px;
   background: none;
