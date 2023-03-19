@@ -1,91 +1,23 @@
 //dependencies
-import React, { lazy } from "react";
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 
-const SignIn = lazy(() =>
-  import("./Pages/SignIn").then((module) => {
-    return {
-      default: module.SignIn,
-    };
-  })
-);
-
-const SignUp = lazy(() =>
-  import("./Pages/SignUp").then((module) => {
-    return {
-      default: module.SignUp,
-    };
-  })
-);
-
-const LandingPage = lazy(() =>
-  import("./Pages/LandingPage").then((module) => {
-    return { default: module.LandingPage };
-  })
-);
-const ItemViewPage = lazy(() =>
-  import("./Pages/ItemViewPage").then((module) => {
-    return { default: module.ItemViewPage };
-  })
-);
-const ComputerParts = lazy(() =>
-  import("./Pages/ComputerParts").then((module) => {
-    return { default: module.ComputerParts };
-  })
-);
-
-const ReadyToWear = lazy(() =>
-  import("./Pages/ReadyToWear").then((module) => {
-    return { default: module.ReadyToWear };
-  })
-);
-
-const RTWItemPage = lazy(() =>
-  import("./Pages/RTWItemPage").then((module) => {
-    return {
-      default: module.RTWItemPage,
-    };
-  })
-);
-
-const HandTools = lazy(() =>
-  import("./Pages/HandTools").then((module) => {
-    return { default: module.HandTools };
-  })
-);
-
-const GadgetPage = lazy(() =>
-  import("./Pages/Gadgets").then((module) => {
-    return {
-      default: module.Gadgets,
-    };
-  })
-);
-
-const Appliances = lazy(() =>
-  import("./Pages/Appliances").then((module) => {
-    return {
-      default: module.Appliances,
-    };
-  })
-);
-
-const AccountPageSettings = lazy(() =>
-  import("./Pages/AccountProfile").then((module) => {
-    return {
-      default: module.AccountProfile,
-    };
-  })
-);
-
-const VerifyEmail = lazy(() =>
-  import("./Pages/VerifyEmail").then((module) => {
-    return {
-      default: module.VerifyEmail,
-    };
-  })
-);
+//pages
+import { LandingPage } from "./Pages/LandingPage";
+import {
+  SignIn,
+  SignUp,
+  ItemViewPage,
+  ComputerParts,
+  ReadyToWear,
+  RTWItemPage,
+  HandTools,
+  GadgetPage,
+  Appliances,
+  AccountPageSettings,
+  VerifyEmail,
+} from "./Routes/pagelazyroutes";
 
 function App() {
   return (

@@ -3,16 +3,6 @@ import mongoose from "mongoose";
 
 const PRODUCT_SCHEMA = new mongoose.Schema(
   {
-    owner: {
-      id: {
-        type: mongoose.SchemaTypes.ObjectId,
-        required: true,
-      },
-      name: {
-        type: String,
-        required: true,
-      },
-    },
     productname: {
       type: String,
       required: true,
@@ -38,7 +28,7 @@ const PRODUCT_SCHEMA = new mongoose.Schema(
       },
     ],
   },
-  { collation: "products" }
+  { collection: "products" }
 );
 
 export const PRODUCT_MODEL = mongoose.model("products", PRODUCT_SCHEMA);

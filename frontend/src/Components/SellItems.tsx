@@ -9,7 +9,7 @@ import {
 } from "../Hooks/Field";
 
 //api
-import { sellItemsAPI } from "../API/SellItems";
+import { sellItemsAPI } from "../API/Products";
 
 //assets
 import add_image from "../Assets/Images/add-icon.png";

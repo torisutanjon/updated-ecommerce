@@ -1,1 +1,1 @@
-export { default as sellRoute } from "./sellroute.js";
+export { default as productRoute } from "./productRoute.js";

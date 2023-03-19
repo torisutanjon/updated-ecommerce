@@ -38,6 +38,10 @@ const USER_ACCOUNT_SCHEMA = new mongoose.Schema(
       required: false,
       default: null,
     },
+    sellingProducts: {
+      type: [mongoose.SchemaTypes.ObjectId],
+      required: false,
+    },
   },
   { collection: "useraccounts" }
 );

@@ -21,8 +21,7 @@ export const Topnav = () => {
           return (
             setFirstMessage("Not Signed In?"),
             setSecondMessage("Sign In Here"),
-            setLink("/sign-in"),
-            (window.location.href = "/")
+            setLink("/sign-in")
           );
 
         if (res?.data.status === true) {

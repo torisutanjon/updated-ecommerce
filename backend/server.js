@@ -8,7 +8,7 @@ import loginRoute from "./routes/loginroute.js";
 import registerRoute from "./routes/registerRoute.js";
 import userRoute from "./routes/userRoute.js";
 import oauthRoute from "./routes/oauthRoute.js";
-import { sellRoute } from "./routes/index.js";
+import { productRoute } from "./routes/index.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -22,7 +22,7 @@ app.use("/login", loginRoute);
 app.use("/register", registerRoute);
 app.use("/get-user", userRoute);
 app.use("/oauth", oauthRoute);
-app.use("/sell-items", sellRoute);
+app.use("/products", productRoute);
 
 //use env file
 dotenv.config();
