@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-
 export const getSellingItems = async (id:string | undefined) => {
     try {
         const res = await axios({
@@ -13,8 +12,25 @@ export const getSellingItems = async (id:string | undefined) => {
                 id
             }
         })
-        
         return res?.data?.sellingProducts
+    } catch (error) {
+        return error
+    }
+}
+
+export const getProductsInfo = async (id:string | undefined, productIDs:Array<string> | undefined) => {
+    try {
+        const res = await axios({
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            url: "/products/get-products-info",
+            data:{
+                id, productIDs
+            }
+        })
+        return res?.data?.productsInfo
     } catch (error) {
         return error
     }
