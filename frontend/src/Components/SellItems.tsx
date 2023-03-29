@@ -18,7 +18,7 @@ import delete_image from "../Assets/Images/delete-icon.png";
 export const SellItems = () => {
   const [variations, setVariations] = useState<Array<JSX.Element>>();
   const [variationsID, setVariationsID] = useState<Array<number>>();
-  const [itemImage, setItemImage] = useState<Array<string>>();
+  const [itemImage, setItemImage] = useState<Array<Blob>>();
 
   const { userID } = useParams();
 
@@ -97,16 +97,16 @@ export const SellItems = () => {
   };
 
   //get input type="file" value on onChange event
-  const setItemImageHandler = (image: Blob) => {
-    let itemImageHolder = [];
-    console.log(itemImage?.length);
+  const setItemImageHandler = async (image: Blob) => {
+    let itemImageHolder: Array<Blob> = [];
+
     if (itemImage === undefined) {
-      itemImageHolder.push(URL.createObjectURL(image));
+      itemImageHolder.push(image);
       setItemImage(itemImageHolder);
     } else {
       if (itemImage.length < 4) {
         itemImageHolder = [...itemImage];
-        itemImageHolder.push(URL.createObjectURL(image));
+        itemImageHolder.push(image);
         setItemImage(itemImageHolder);
       } else {
         alert("Only 4 product images are needed");
@@ -116,7 +116,7 @@ export const SellItems = () => {
   };
 
   //delete item image
-  const deleteItemImageHandler = (image: string) => {
+  const deleteItemImageHandler = (image: Blob) => {
     const index = itemImage?.indexOf(image);
     let itemImageHolder = [...itemImage!];
     itemImageHolder.splice(index!, 1);
@@ -193,7 +193,7 @@ export const SellItems = () => {
         )
           .then((res: any) => {
             alert(res?.data?.message);
-            window.location.reload();
+            // window.location.reload();
           })
           .catch((err: any) => {
             console.log(err?.response?.statusText);
@@ -267,9 +267,10 @@ export const SellItems = () => {
             ) : (
               <>
                 {itemImage.map((data, key) => {
+                  console.log(data);
                   return (
                     <div className="sell-item-container" key={key}>
-                      <img src={data} alt="" />
+                      <img src={URL.createObjectURL(data)} alt="" />
                       <button
                         onClick={() => deleteItemImageHandler(data)}
                       ></button>
@@ -284,7 +285,7 @@ export const SellItems = () => {
             type="file"
             id="get-file-input"
             style={{ display: "none" }}
-            accept="image/*"
+            accept="image/png, image/jpeg"
             onChange={(e) => {
               setItemImageHandler(e.target.files![0]);
             }}

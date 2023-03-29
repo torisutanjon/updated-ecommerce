@@ -30,8 +30,19 @@ export const MyProducts = () => {
         return res;
       })
       .then((res: any) => {
+        let endItem = 5;
+
         let startIndex = (currentPage - 1) * 5;
-        let endIndex = startIndex + 5;
+
+        if (res.length - startIndex >= 5) {
+          endItem = 5;
+        }
+
+        if (res.length - startIndex < 5) {
+          endItem = res.length - startIndex;
+        }
+
+        let endIndex = startIndex + endItem;
 
         loopHandler(startIndex, endIndex, res);
       })

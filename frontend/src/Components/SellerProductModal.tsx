@@ -5,7 +5,7 @@ interface ProductInfo {
   productVariations: Array<string>;
   productQuantity: string;
   productprice: string;
-  productImage: Array<Blob>;
+  productImage: Array<string>;
 }
 
 export const SellerProductModal = ({
@@ -18,7 +18,7 @@ export const SellerProductModal = ({
   return (
     <div className="seller-product-modal">
       <div className="item-image-container">
-        <img src={""} alt="" />
+        <img src={productImage[0]} alt="" />
       </div>
       <div className="item-info-container">
         <p>{productName}</p>

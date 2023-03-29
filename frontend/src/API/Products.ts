@@ -36,22 +36,27 @@ export const getProductsInfo = async (id:string | undefined, productIDs:Array<st
     }
 }
 
-export const sellItemsAPI = async (id:string |undefined, productName:string | null, productQuantity: string, productPrice:string, productVariations:Array<string>, productImages:Array<string> | undefined) => {
+export const sellItemsAPI = async (userID:string |undefined, productName:string | null, productQuantity: string, productPrice:string, productVariations:Array<string>, productImages:Array<Blob> | undefined) => {
     try {
+        
+        const formData = new FormData()
+        productImages?.forEach(image => {
+            formData.append("files", image)
+        })
+
+        formData.append("userID",userID!)
+        formData.append("productName",productName!)
+        formData.append("productQuantity",productQuantity!)
+        formData.append("productPrice",productPrice!)
+        formData.append("productVariations",JSON.stringify(productVariations))
+
         const res = await axios({
-            headers:{
-                "Content-Type": "application/json"
-            },
+            headers: {
+                "Content-Type" : "multipart/form-data"
+            }, 
             method: "POST",
             url: "/products/sell-product",
-            data:{
-                userID: id,
-                productName,
-                productVariations,
-                productQuantity,
-                productPrice,
-                productImages
-            }
+            data: formData,
         })
         return res
     } catch (error) {

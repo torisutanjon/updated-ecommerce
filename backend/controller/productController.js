@@ -1,39 +1,39 @@
 import { PRODUCT_MODEL } from "../model/Items.js";
 import { USER_ACCOUNT_MODEL } from "../model/Account.js";
+import { imageStore } from "../utils/index.js";
 
 export default {
   addProduct: async (req, res) => {
-    await USER_ACCOUNT_MODEL.findOne({
-      _id: req.body.userID,
-    }).then(async (user) => {
-      if (!user)
-        return res.status(404).send({ message: "User Not Found Error" });
+    try {
+      let productUrls = [];
 
-      PRODUCT_MODEL.create(
-        {
-          owner: {
-            id: user._id,
-            name: `${user.name.firstname} ${user.name.lastname}`,
-          },
+      //access the acount from the database
+      await USER_ACCOUNT_MODEL.findOne({
+        _id: req.body.userID,
+      }).then(async (user) => {
+        if (!user) return console.error("No user found error");
+
+        //upload the images into the firebase storage and get the urls
+        const urls = await imageStore.uploadImageToFirebase(req.files);
+
+        const createdProduct = await PRODUCT_MODEL.create({
           productname: req.body.productName,
           productvariations: req.body.productVariations,
           productquantity: req.body.productQuantity,
           productprice: req.body.productPrice,
-          productimages: req.body.productImages,
-        },
-        async (err, product) => {
-          if (err) return console.log(err);
-          await USER_ACCOUNT_MODEL.updateOne(
-            { _id: user._id },
-            { $push: { sellingProducts: product._id } }
-          );
-        }
-      );
+          productimages: [...urls],
+        });
 
-      res
-        .status(201)
-        .send({ message: "Item created, check My Products to view." });
-    });
+        await USER_ACCOUNT_MODEL.updateOne(
+          { _id: user._id },
+          { $push: { sellingProducts: createdProduct._id } }
+        );
+
+        res.status(201).send({ message: "Product Created" });
+      });
+    } catch (error) {
+      console.error(error);
+    }
   },
   getProductsList: async (req, res) => {
     await USER_ACCOUNT_MODEL.findOne({

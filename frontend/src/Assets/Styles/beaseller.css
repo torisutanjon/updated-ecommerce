@@ -312,7 +312,7 @@
 .sell-item-container img {
   position: relative;
   height: 90%;
-  width: 90%;
+  max-width: 90%;
 }
 
 .sell-items-image-div button {

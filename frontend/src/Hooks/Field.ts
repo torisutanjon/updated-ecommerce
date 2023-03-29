@@ -13,7 +13,7 @@ export const checkInputArrayValue = async (inputArray: string) => {
     if(element.length === 0) return {status: isNull = false, message: message = "At least one variation is required!"}
     element.forEach(data => {
         const dataContents = data.value.split(":")
-        if(dataContents[0] === "" || dataContents[1] === ""){
+        if(dataContents[0] === "" || dataContents[0] === undefined || dataContents[1] === "" ||  dataContents[1] === undefined){
             isNull = false
             message = "Invalid Variation Value!"
         }
@@ -21,14 +21,14 @@ export const checkInputArrayValue = async (inputArray: string) => {
     return {status: isNull, message: message}
 }
 
-export const checkStringArrayState = async (array: Array<string> | undefined) => {
+export const checkStringArrayState = async (array: Array<Blob> | undefined) => {
     let isNull = true
     let message = ""
     if(array === undefined) return {status:isNull = false, message: message = "At least one item image is required!"}
     if(array.length === 0) return {status:isNull = false, message: message = "At least one item image is required!"}
 
     array.forEach(data => {
-        if(data === null || data === undefined || data === ""){
+        if(data === null || data === undefined){
             isNull = false
             message = "Invalid item image error"
         }

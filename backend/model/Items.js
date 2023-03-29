@@ -23,7 +23,7 @@ const PRODUCT_SCHEMA = new mongoose.Schema(
     },
     productimages: [
       {
-        type: String,
+        type: [String],
         required: true,
       },
     ],
