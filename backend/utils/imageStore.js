@@ -64,41 +64,4 @@ export default {
       return;
     }
   },
-  savingCode: () => {
-    // import admin from "firebase-admin";
-    // import serviceAccount from "../keys/updated-e-commerce-app-8f25e0b85b7a.json" assert { type: "json" };
-    // import { getStorage, uploadBytes } from "firebase/storage";
-    //firebase configs
-    // admin.initializeApp({
-    //   credential: admin.credential.cert(serviceAccount),
-    //   storageBucket: "gs://updated-e-commerce-app.appspot.com",
-    // });
-    // const bucket = admin.storage().bucket();
-    // function: () => {
-    //   const promises = files.map(async (file) => {
-    //     const timestamp = new Date().getTime();
-    //     const fileName = `products/${timestamp}-${file.originalname}`;
-    //     const blob = bucket.file(fileName);
-    //     const blobStream = blob.createWriteStream({
-    //       metadata: {
-    //         contentType: file.mimetype,
-    //       },
-    //     });
-    //     return new Promise((resolve, reject) => {
-    //       blobStream.on("finish", async () => {
-    //         try {
-    //           const url = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
-    //           resolve(url);
-    //         } catch (error) {
-    //           console.error(error);
-    //           reject(error);
-    //         }
-    //       });
-    //       blobStream.end(file.buffer);
-    //     });
-    //   });
-    //   const imageUrls = await Promise.all(promises);
-    //   return imageUrls;
-    // }
-  },
 };
